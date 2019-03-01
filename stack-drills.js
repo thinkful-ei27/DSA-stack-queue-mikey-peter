@@ -39,7 +39,41 @@ function isPalindrome(s) {
   return (reverseStr === s);
 }
 
+function checkParentheses(str) {
+  // (( )))) ((
 
+  //  Finding closed parens w/o matching open, report location of )
+
+  // expression finishes without close, repot location of open;
+
+  let exStack = new Stack();
+  for (let i = 0; i < str.length; i++) {
+    exStack.push([str[i], i]);
+  }
+  let counter = 0;
+  let charArray;
+  let lastOpen;
+
+  while (exStack.top !== null) {
+    console.log(counter);
+    charArray = exStack.pop();
+    if (charArray[0] === '(') {
+      counter++;
+      lastOpen = charArray[1];
+    }
+    if (charArray[0] === ')') {
+      counter--;
+    }
+    if (counter === -1) {
+      return charArray[1];
+    }
+  }
+  if (counter > 1) {
+    return lastOpen;
+  }
+  return 'Alll good';
+
+}
 
 
 
@@ -63,11 +97,14 @@ function main() {
   tempStack.push(starTrek.pop());
   starTrek.pop();
   starTrek.push(tempStack.pop());
-  console.log(display(starTrek)); // [ 'Scotty', 'Spock', 'Kirk' ]
-  console.log(isPalindrome('dad')); //  true
-  console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
-  console.log(isPalindrome('1001')); // true
-  console.log(isPalindrome('Tauhida')); // false
+  // console.log(display(starTrek)); // [ 'Scotty', 'Spock', 'Kirk' ]
+  // console.log(isPalindrome('dad')); //  true
+  // console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
+  // console.log(isPalindrome('1001')); // true
+  // console.log(isPalindrome('Tauhida')); // false
+  console.log('this', checkParentheses('((()))('));
+
+
 }
 
 main();
