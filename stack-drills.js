@@ -21,8 +21,6 @@ const display = stack => {
 
   return results;
 };
-
-
 // Check for palindromes using stack
 function isPalindrome(s) {
   s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
@@ -47,10 +45,10 @@ function checkParentheses(str) {
   // expression finishes without close, repot location of open;
 
   let exStack = new Stack();
-  for (let i = 0; i < str.length; i++) {
+  for (let i = str.length; i > 0; i--) {
     exStack.push([str[i], i]);
   }
-  let counter = 0;
+  let counter = 1;
   let charArray;
   let lastOpen;
 
@@ -59,24 +57,53 @@ function checkParentheses(str) {
     charArray = exStack.pop();
     if (charArray[0] === '(') {
       counter++;
-      lastOpen = charArray[1];
+      lastOpen = (charArray[1] + 1);
     }
     if (charArray[0] === ')') {
       counter--;
     }
-    if (counter === -1) {
-      return charArray[1];
+    if (counter < 0) {
+      return `) without an ( at position: ${charArray[1] + 1}`;
     }
   }
-  if (counter > 1) {
-    return lastOpen;
+  if (counter > 0) {
+    return `( without an ) at position: ${lastOpen}`;    
   }
   return 'Alll good';
-
 }
 
-
-
+// Sort Stack
+const sortStack = stack => {
+  // Check to see if stack is empty
+  // if (stack.top === null) {
+  //   return 'The stack is empty';
+  // }
+  // console.log(stack);
+  
+  const tempStack = new Stack();
+  let temp = stack.top;
+  while (stack.top !== null) {
+    // // Check to see if stack has one item
+    // if (stack.pop() && !(peek(stack))) {
+    //   return stack;
+    // }
+    tempStack.push(temp);
+    temp = stack.pop();
+    if (peek(tempStack) > temp) {
+      stack.push(tempStack.pop());
+      tempStack.push(temp);
+      temp = stack.top;
+    } else {
+      tempStack.push(temp);
+      temp = stack.top;
+    }
+  }
+  // while(tempStack.top !== null) {
+  //   stack.push(tempStack.pop());
+  // }
+  // return stack;
+  return tempStack;
+};
 
 
 
@@ -102,9 +129,18 @@ function main() {
   // console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
   // console.log(isPalindrome('1001')); // true
   // console.log(isPalindrome('Tauhida')); // false
-  console.log('this', checkParentheses('((()))('));
-
-
+  // console.log('1st =========', checkParentheses('((())((('));
+  // console.log('2nd =========', checkParentheses('((()))'));
+  // console.log('3rd =========', checkParentheses('((())('));
+  // console.log('4th =========', checkParentheses('))(('));
+  const numStack = new Stack();
+  numStack.push(3);
+  numStack.push(5);
+  numStack.push(2);
+  numStack.push(6);
+  // console.log('display before sort ==========', display(numStack));
+  // sortStack(numStack);
+  // console.log('display after sort ==========', display(numStack));
 }
 
 main();
