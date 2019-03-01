@@ -1,10 +1,12 @@
+'use strict';
+
 const Stack = require('./stack');
 
 const starTrek = new Stack();
 
 const peek = stack => {
   return stack.top.data;
-}; 
+};
 
 const display = stack => {
   const results = [];
@@ -12,11 +14,11 @@ const display = stack => {
   if (stack.top === null) {
     return 'The list is empty';
   }
-  while (current.next !== null) {
-    results.push(current.data);
-    current = current.next;
+  while (current !== null) {
+    results.push(stack.pop());
+    current = stack.top;
   }
-  results.push(current.data);
+
   return results;
 };
 
@@ -24,8 +26,7 @@ const display = stack => {
 // Check for palindromes using stack
 function isPalindrome(s) {
   s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
-  const tempStack = new Stack();
-
+ 
 }
 
 
@@ -41,18 +42,20 @@ function isPalindrome(s) {
 
 
 
-function main () {
+function main() {
   starTrek.push('Kirk');
   starTrek.push('Spock');
   starTrek.push('McCoy');
   starTrek.push('Scotty');
-  console.log(peek(starTrek)); // Scotty
-  console.log(display(starTrek)); //[ 'Scotty', 'McCoy', 'Spock', 'Kirk' ]
+  // console.log(peek(starTrek)); // Scotty
+  // console.log(display(starTrek)); //[ 'Scotty', 'McCoy', 'Spock', 'Kirk' ]
   const tempStack = new Stack();
   tempStack.push(starTrek.pop());
   starTrek.pop();
   starTrek.push(tempStack.pop());
   console.log(display(starTrek)); // [ 'Scotty', 'Spock', 'Kirk' ]
+  
+
 }
 
 main();
