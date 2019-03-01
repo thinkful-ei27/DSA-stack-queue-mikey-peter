@@ -26,7 +26,17 @@ const display = stack => {
 // Check for palindromes using stack
 function isPalindrome(s) {
   s = s.toLowerCase().replace(/[^a-zA-Z0-9]/g, '');
- 
+  const palidromeStack = new Stack();
+  for (let i = 0; i < s.length; i++) {
+    palidromeStack.push(s[i]);
+  }
+  let current = palidromeStack.top;
+  let reverseStr = '';
+  while (current) {
+    reverseStr += palidromeStack.pop();
+    current = palidromeStack.top;
+  }
+  return (reverseStr === s);
 }
 
 
@@ -54,8 +64,10 @@ function main() {
   starTrek.pop();
   starTrek.push(tempStack.pop());
   console.log(display(starTrek)); // [ 'Scotty', 'Spock', 'Kirk' ]
-  
-
+  console.log(isPalindrome('dad')); //  true
+  console.log(isPalindrome('A man, a plan, a canal: Panama')); // true
+  console.log(isPalindrome('1001')); // true
+  console.log(isPalindrome('Tauhida')); // false
 }
 
 main();
